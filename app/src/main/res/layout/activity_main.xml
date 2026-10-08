@@ -53,6 +53,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnPick"
+                        android:textStyle="bold"
                         android:layout_marginTop="12dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,6 +86,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                       app:fontFamily="@font/qomra_bold"
                         android:text="@string/options_title"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
@@ -127,6 +130,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:enabled="false"
                     android:text="@string/convert" />
 
@@ -152,7 +156,10 @@
                     android:id="@+id/progressBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="100" />
+                    android:max="100"
+                    app:indeterminateAnimationType="disjoint"
+                    app:trackCornerRadius="4dp"
+                    app:trackThickness="8dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvProgress"
@@ -168,6 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textStyle="bold"
                 android:enabled="false"
                 android:text="@string/save" />
 

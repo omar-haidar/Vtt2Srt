@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">محوّل الترجمة VTT ← SRT</string>
+    <string name="app_name">VTT to SRT Converter</string>
 
-    <string name="pick_file">اختيار ملف ترجمة (VTT)</string>
-    <string name="no_file">لم يتم اختيار ملف بعد</string>
-    <string name="cues_count">عدد الأسطر: %d</string>
+    <string name="pick_file">Select Subtitle File (VTT)</string>
+    <string name="no_file">No file selected</string>
+    <string name="cues_count">Lines: %d</string>
 
-    <string name="options_title">الخيارات</string>
-    <string name="opt_translate">ترجمة إلى العربية (أونلاين)</string>
-    <string name="opt_bilingual">ترجمة ثنائية (عربي + النص الأصلي)</string>
-    <string name="opt_speakers">الاحتفاظ بأسماء المتحدثين</string>
-    <string name="opt_rtl">تصحيح اتجاه النص العربي (RTL)</string>
+    <string name="options_title">Options</string>
+    <string name="opt_translate">Translate to Arabic (Online)</string>
+    <string name="opt_bilingual">Bilingual Subtitles (Arabic + Original)</string>
+    <string name="opt_speakers">Keep Speaker Names</string>
+    <string name="opt_rtl">Fix Arabic Text Direction (RTL)</string>
 
-    <string name="convert">تحويل</string>
-    <string name="cancel">إلغاء</string>
-    <string name="save">حفظ ملف SRT</string>
-    <string name="progress_fmt">جارٍ المعالجة… %d%%</string>
+    <string name="convert">Convert</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save SRT File</string>
+    <string name="progress_fmt">Processing… %d%%</string>
 
-    <string name="preview_title">معاينة</string>
-    <string name="preview_empty">ستظهر معاينة الأسطر هنا بعد اختيار الملف</string>
+    <string name="preview_title">Preview</string>
+    <string name="preview_empty">Line preview will appear here after selecting a file</string>
 
-    <string name="err_invalid_vtt">الملف ليس بصيغة WebVTT صالحة</string>
-    <string name="err_read">تعذّرت قراءة الملف</string>
-    <string name="err_save">تعذّر حفظ الملف</string>
-    <string name="err_offline">لا يوجد اتصال بالإنترنت، والترجمة تحتاج إلى اتصال</string>
-    <string name="err_translate_failed">فشلت الترجمة، تحقق من الاتصال وحاول مجددًا</string>
-    <string name="err_generic">حدث خطأ غير متوقع</string>
-    <string name="msg_done">تم التحويل بنجاح، يمكنك الآن حفظ الملف</string>
-    <string name="msg_done_failed">تم التحويل، لكن تعذّرت ترجمة %d سطر وبقيت بلغتها الأصلية</string>
-    <string name="msg_cancelled">تم الإلغاء</string>
-    <string name="msg_saved">تم حفظ الملف</string>
+    <string name="err_invalid_vtt">The file is not a valid WebVTT format</string>
+    <string name="err_read">Could not read file</string>
+    <string name="err_save">Could not save file</string>
+    <string name="err_offline">No internet connection. Translation requires an active network.</string>
+    <string name="err_translate_failed">Translation failed. Please check your connection and try again.</string>
+    <string name="err_generic">An unexpected error occurred</string>
+    <string name="msg_done">Conversion completed successfully. You can now save the file.</string>
+    <string name="msg_done_failed">Conversion completed, but failed to translate %d lines which remain in original language.</string>
+    <string name="msg_cancelled">Cancelled</string>
+    <string name="msg_saved">File saved successfully</string>
 </resources>

@@ -65,8 +65,16 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getCues().observe(this, this::renderCues);
         viewModel.getStatus().observe(this, this::renderStatus);
         viewModel.getProgress().observe(this, percent -> {
-            binding.progressBar.setProgressCompat(percent, true);
-            binding.tvProgress.setText(getString(R.string.progress_fmt, percent));
+            int p = percent != null ? percent : 0;
+            if (p <= 0) {
+                binding.progressBar.setIndeterminate(true);
+            } else {
+                if (binding.progressBar.isIndeterminate()) {
+                    binding.progressBar.setIndeterminate(false);
+                }
+                binding.progressBar.setProgressCompat(p, true);
+            }
+            binding.tvProgress.setText(getString(R.string.progress_fmt, p));
         });
         viewModel.getMessage().observe(this, this::showMessage);
     }
