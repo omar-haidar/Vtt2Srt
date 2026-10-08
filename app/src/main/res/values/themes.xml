@@ -31,8 +31,8 @@
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?isLightTheme</item>
 
         <!-- Font -->
-        <item name="android:fontFamily">@font/qomra</item>
-        <item name="fontFamily">@font/qomra</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="fontFamily">@font/josefin_sans</item>
     </style>
 
     <style name="BottomSheetShape" parent="">

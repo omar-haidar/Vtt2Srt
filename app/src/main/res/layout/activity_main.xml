@@ -234,8 +234,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="20dp">
+                android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"

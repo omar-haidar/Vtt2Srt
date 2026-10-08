@@ -3,18 +3,15 @@ package com.subtitle.vtt2srt.ui;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.widget.ArrayAdapter;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -39,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
     private final CueAdapter adapter = new CueAdapter();
     private String selectedTargetLang = "ar";
 
+    private BottomSheetBehavior<View> bottomSheetBehavior;
+    private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            } else {
+                finish();
+            }
+        }
+    };
     private final ActivityResultLauncher<String[]> pickLauncher =
             registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
                 if (uri != null) viewModel.loadFile(uri);
@@ -56,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setupWindowInsets();
-
+        getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
@@ -71,14 +79,18 @@ public class MainActivity extends AppCompatActivity {
             selectedTargetLang = languages.get(0).getCode();
             binding.swRtl.setChecked(languages.get(0).isRtl());
         }
-        binding.actvTargetLanguage.setOnItemClickListener((parent, view, position, id) -> {
+        binding.actvTargetLanguage.setOnItemClickListener((parent, view, position, id) ->
+
+        {
             SubtitleLanguage lang = languages.get(position);
             selectedTargetLang = lang.getCode();
             binding.swRtl.setChecked(lang.isRtl());
         });
 
-        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetPreview);
-        binding.layoutSheetHeader.setOnClickListener(v -> {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetPreview);
+        binding.layoutSheetHeader.setOnClickListener(v ->
+
+        {
             if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             } else {
@@ -91,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         binding.btnCancel.setOnClickListener(v -> viewModel.cancel());
         binding.btnSave.setOnClickListener(v -> saveLauncher.launch(viewModel.getSuggestedFileName()));
         binding.swTranslate.setOnCheckedChangeListener((button, checked) -> updateOptionDependencies());
+
         updateOptionDependencies();
 
 
@@ -128,8 +141,9 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             getWindow().setNavigationBarContrastEnforced(false);
         }
-        UI.addSystemWindowInsetToPadding(binding.appbar,true,true,true,false);
+        UI.addSystemWindowInsetToPadding(binding.appbar, true, true, true, false);
     }
+
 
     private ConversionOptions buildOptions() {
         boolean translate = binding.swTranslate.isChecked();
