@@ -9,12 +9,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.subtitle.vtt2srt.R;
+import com.subtitle.vtt2srt.data.SimpleHttpClient;
 import com.subtitle.vtt2srt.data.SubtitleFileRepository;
+import com.subtitle.vtt2srt.data.TranslationSettingsRepository;
 import com.subtitle.vtt2srt.domain.model.ConversionOptions;
 import com.subtitle.vtt2srt.domain.model.SubtitleCue;
 import com.subtitle.vtt2srt.domain.parser.SubtitleParseException;
 import com.subtitle.vtt2srt.domain.parser.SubtitleParser;
 import com.subtitle.vtt2srt.domain.parser.VttParser;
+import com.subtitle.vtt2srt.domain.translate.AiTranslatorConfig;
+import com.subtitle.vtt2srt.domain.translate.Translator;
 import com.subtitle.vtt2srt.domain.translate.TranslatorFactory;
 import com.subtitle.vtt2srt.domain.usecase.TranslateSubtitlesUseCase;
 import com.subtitle.vtt2srt.domain.writer.SrtWriter;
@@ -36,12 +40,12 @@ public class MainViewModel extends AndroidViewModel {
     public enum Status { IDLE, LOADED, WORKING, DONE }
 
     private static final String SOURCE_LANG = "auto";
-    private static final String TARGET_LANG = "ar";
 
     private final SubtitleParser parser = new VttParser();
     private final SubtitleWriter writer = new SrtWriter();
     private final SubtitleFileRepository repository;
-    private final TranslateSubtitlesUseCase translateUseCase;
+    private final TranslationSettingsRepository settingsRepository;
+    private final SimpleHttpClient httpClient = new SimpleHttpClient();
     private final ExecutorService ioExecutor = Executors.newSingleThreadExecutor();
 
     private final MutableLiveData<String> fileName = new MutableLiveData<>();
@@ -50,18 +54,36 @@ public class MainViewModel extends AndroidViewModel {
     private final MutableLiveData<Status> status = new MutableLiveData<>(Status.IDLE);
     private final MutableLiveData<Integer> progress = new MutableLiveData<>(0);
     private final MutableLiveData<Event<String>> message = new MutableLiveData<>();
+    private final MutableLiveData<AiTranslatorConfig> aiConfig = new MutableLiveData<>();
 
+    private volatile TranslateSubtitlesUseCase translateUseCase;
     private volatile List<SubtitleCue> parsedCues;
     private volatile String srtContent;
     private volatile String baseName = "subtitle";
-    private volatile boolean lastRunTranslated;
     private volatile AtomicBoolean cancelToken;
     private volatile Future<?> job;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = new SubtitleFileRepository(application.getContentResolver());
-        translateUseCase = new TranslateSubtitlesUseCase(TranslatorFactory.createDefault(), 3);
+        settingsRepository = new TranslationSettingsRepository(application);
+        reloadTranslationEngine();
+    }
+
+    public void reloadTranslationEngine() {
+        AiTranslatorConfig config = settingsRepository.getConfig();
+        aiConfig.setValue(config);
+        Translator translator = TranslatorFactory.create(httpClient, config);
+        translateUseCase = new TranslateSubtitlesUseCase(translator, 3);
+    }
+
+    public void saveAiConfig(AiTranslatorConfig config) {
+        settingsRepository.saveConfig(config);
+        reloadTranslationEngine();
+    }
+
+    public AiTranslatorConfig getAiConfigValue() {
+        return settingsRepository.getConfig();
     }
 
     // ---- observable state ----
@@ -70,6 +92,7 @@ public class MainViewModel extends AndroidViewModel {
     public LiveData<Status> getStatus() { return status; }
     public LiveData<Integer> getProgress() { return progress; }
     public LiveData<Event<String>> getMessage() { return message; }
+    public LiveData<AiTranslatorConfig> getAiConfig() { return aiConfig; }
 
     // ---- actions ----
     public void loadFile(final Uri uri) {
@@ -146,7 +169,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public String getSuggestedFileName() {
-        return baseName /*+ (lastRunTranslated ? ".ar" : "")*/ + ".srt";
+        return baseName + ".srt";
     }
 
     // ---- internals ----
@@ -158,7 +181,7 @@ public class MainViewModel extends AndroidViewModel {
             int failed = 0;
             if (options.isTranslate()) {
                 TranslateSubtitlesUseCase.TranslationReport report = translateUseCase.execute(
-                        source, SOURCE_LANG, TARGET_LANG,
+                        source, SOURCE_LANG, options.getTargetLang(),
                         new TranslateSubtitlesUseCase.ProgressListener() {
                             @Override
                             public void onProgress(int done, int total) {
@@ -174,7 +197,6 @@ public class MainViewModel extends AndroidViewModel {
                 }
             }
             srtContent = writer.write(result, options);
-            lastRunTranslated = options.isTranslate();
             cues.postValue(result);
             progress.postValue(100);
             status.postValue(Status.DONE);

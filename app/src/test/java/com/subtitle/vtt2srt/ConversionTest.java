@@ -1,12 +1,15 @@
 package com.subtitle.vtt2srt;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.subtitle.vtt2srt.domain.model.ConversionOptions;
 import com.subtitle.vtt2srt.domain.model.SubtitleCue;
 import com.subtitle.vtt2srt.domain.parser.SubtitleParseException;
 import com.subtitle.vtt2srt.domain.parser.VttParser;
+import com.subtitle.vtt2srt.domain.translate.AiTranslatorConfig;
+import com.subtitle.vtt2srt.domain.translate.TranslationEngineType;
 import com.subtitle.vtt2srt.domain.translate.TranslationException;
 import com.subtitle.vtt2srt.domain.translate.Translator;
 import com.subtitle.vtt2srt.domain.usecase.TranslateSubtitlesUseCase;
@@ -14,6 +17,7 @@ import com.subtitle.vtt2srt.domain.writer.SrtWriter;
 
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -57,8 +61,19 @@ public class ConversionTest {
         SubtitleCue translated = cues.get(0).withTranslatedText("تفضل بالدخول.");
         ConversionOptions options = new ConversionOptions.Builder()
                 .translate(true).bilingual(true).rtlMarks(true).build();
-        String srt = new SrtWriter().write(java.util.Collections.singletonList(translated), options);
+        String srt = new SrtWriter().write(Collections.singletonList(translated), options);
         assertTrue(srt.contains("\u200Fتفضل بالدخول.\n<i>Come on in.</i>"));
+    }
+
+    @Test
+    public void writesNonRtlLanguageWithoutRtlMark() throws SubtitleParseException {
+        List<SubtitleCue> cues = new VttParser().parse(VTT);
+        SubtitleCue translated = cues.get(0).withTranslatedText("Entre");
+        ConversionOptions options = new ConversionOptions.Builder()
+                .translate(true).targetLang("es").rtlMarks(false).build();
+        String srt = new SrtWriter().write(Collections.singletonList(translated), options);
+        assertTrue(srt.contains("Entre"));
+        assertFalse(srt.contains("\u200F"));
     }
 
     @Test
@@ -77,5 +92,22 @@ public class ConversionTest {
         assertEquals(1, report.getFailedCount());
         assertEquals(false, report.getCues().get(0).isTranslated());
         assertEquals("ar:Hello & welcome\nsecond line", report.getCues().get(1).getTranslatedText());
+    }
+
+    @Test
+    public void aiTranslatorConfigDefaultsAndEffectiveValues() {
+        AiTranslatorConfig config = new AiTranslatorConfig.Builder()
+                .engineType(TranslationEngineType.GEMINI)
+                .apiKey("test-key")
+                .build();
+        assertTrue(config.isAiEngine());
+        assertEquals("gemini-1.5-flash", config.getEffectiveModelName());
+
+        AiTranslatorConfig deepseekConfig = new AiTranslatorConfig.Builder()
+                .engineType(TranslationEngineType.DEEPSEEK)
+                .apiKey("key")
+                .build();
+        assertEquals("https://api.deepseek.com/v1", deepseekConfig.getEffectiveBaseUrl());
+        assertEquals("deepseek-chat", deepseekConfig.getEffectiveModelName());
     }
 }

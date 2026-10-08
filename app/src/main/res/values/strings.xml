@@ -7,10 +7,11 @@
     <string name="cues_count">Lines: %d</string>
 
     <string name="options_title">Options</string>
-    <string name="opt_translate">Translate to Arabic (Online)</string>
-    <string name="opt_bilingual">Bilingual Subtitles (Arabic + Original)</string>
+    <string name="opt_translate">Enable Translation</string>
+    <string name="target_language_hint">Target Language</string>
+    <string name="opt_bilingual">Bilingual Subtitles (Target + Original)</string>
     <string name="opt_speakers">Keep Speaker Names</string>
-    <string name="opt_rtl">Fix Arabic Text Direction (RTL)</string>
+    <string name="opt_rtl">Fix Text Direction (RTL/LTR)</string>
 
     <string name="convert">Convert</string>
     <string name="cancel">Cancel</string>
@@ -30,4 +31,25 @@
     <string name="msg_done_failed">Conversion completed, but failed to translate %d lines which remain in original language.</string>
     <string name="msg_cancelled">Cancelled</string>
     <string name="msg_saved">File saved successfully</string>
+
+    <string name="action_about">About</string>
+    <string name="about_title">About VTT to SRT Converter</string>
+    <string name="about_message">An open-source Android application designed to convert WebVTT (.vtt) subtitle files into standard SubRip (.srt) format with automated online Arabic translation capabilities.\n\nKey Features:\n• WebVTT parsing &amp; SRT conversion\n• Online Arabic subtitle translation\n• Bilingual subtitle mode\n• RTL text orientation fix\n• Speaker names preservation\n\nVersion: 1.0.0</string>
+    <string name="btn_close">Close</string>
+
+    <string name="action_settings">Translation Settings</string>
+    <string name="settings_title">AI &amp; Translation Settings</string>
+    <string name="setting_engine">Translation Engine</string>
+    <string name="setting_api_key">API Key</string>
+    <string name="setting_model_name">Model Name</string>
+    <string name="setting_model_name_helper">Leave blank for provider default (e.g. gemini-1.5-flash, deepseek-chat)</string>
+    <string name="setting_base_url">Custom API Base URL</string>
+    <string name="setting_base_url_helper">For OpenAI proxies / local LLM (e.g. https://api.openai.com/v1)</string>
+    <string name="setting_system_prompt">Custom System Prompt</string>
+    <string name="btn_save">Save</string>
+    <string name="engine_free">Free Web Engine (Google &amp; MyMemory)</string>
+    <string name="engine_gemini">Google Gemini AI</string>
+    <string name="engine_deepseek">DeepSeek AI</string>
+    <string name="engine_claude">Anthropic Claude AI</string>
+    <string name="engine_custom_openai">Custom OpenAI / Local LLM</string>
 </resources>

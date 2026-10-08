@@ -7,10 +7,11 @@
     <string name="cues_count">عدد الأسطر: %d</string>
 
     <string name="options_title">الخيارات</string>
-    <string name="opt_translate">ترجمة إلى العربية (أونلاين)</string>
-    <string name="opt_bilingual">ترجمة ثنائية (عربي + النص الأصلي)</string>
+    <string name="opt_translate">تفعيل الترجمة الفورية</string>
+    <string name="target_language_hint">لغة الترجمة المستهدفة</string>
+    <string name="opt_bilingual">ترجمة ثنائية (المستهدفة + النص الأصلي)</string>
     <string name="opt_speakers">الاحتفاظ بأسماء المتحدثين</string>
-    <string name="opt_rtl">تصحيح اتجاه النص العربي (RTL)</string>
+    <string name="opt_rtl">إصلاح اتجاه واتساق النص (RTL/Direction)</string>
 
     <string name="convert">تحويل</string>
     <string name="cancel">إلغاء</string>
@@ -30,4 +31,25 @@
     <string name="msg_done_failed">تم التحويل، لكن تعذّرت ترجمة %d سطر وبقيت بلغتها الأصلية</string>
     <string name="msg_cancelled">تم الإلغاء</string>
     <string name="msg_saved">تم حفظ الملف</string>
+
+    <string name="action_about">عن التطبيق</string>
+    <string name="about_title">عن محوّل الترجمة</string>
+    <string name="about_message">تطبيق أندرويد مفتوح المصدر مخصص لتحويل ملفات الترجمة بصيغة WebVTT (.vtt) إلى صيغة SubRip (.srt) المعيارية مع دعم الترجمة الآلية إلى اللغة العربية.\n\nالمميزات الرئيسية:\n• تحويل صيغ WebVTT إلى SRT\n• ترجمة فورية أونلاين إلى العربية\n• دمج الترجمة الثنائية (عربي + إنجليزي)\n• تصحيح اتجاه النص العربي (RTL)\n• الاحتفاظ بأسماء المتحدثين\n\nالإصدار: 1.0.0</string>
+    <string name="btn_close">إغلاق</string>
+
+    <string name="action_settings">إعدادات الترجمة</string>
+    <string name="settings_title">إعدادات الترجمة والذكاء الاصطناعي</string>
+    <string name="setting_engine">محرك الترجمة</string>
+    <string name="setting_api_key">مفتاح API Key</string>
+    <string name="setting_model_name">اسم النموذج (Model Name)</string>
+    <string name="setting_model_name_helper">اتركه فارغًا للافتراضي (مثال: gemini-1.5-flash, deepseek-chat)</string>
+    <string name="setting_base_url">رابط API المخصص (Base URL)</string>
+    <string name="setting_base_url_helper">للسيرفرات المخصصة أو المحلي (مثال: https://api.openai.com/v1)</string>
+    <string name="setting_system_prompt">تعليمات الموجه المخصص (System Prompt)</string>
+    <string name="btn_save">حفظ</string>
+    <string name="engine_free">المحرك المجاني (Google &amp; MyMemory)</string>
+    <string name="engine_gemini">Google Gemini AI</string>
+    <string name="engine_deepseek">DeepSeek AI</string>
+    <string name="engine_claude">Anthropic Claude AI</string>
+    <string name="engine_custom_openai">OpenAI / سيرفر مخصص</string>
 </resources>

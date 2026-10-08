@@ -34,4 +34,12 @@
         <item name="android:fontFamily">@font/qomra</item>
         <item name="fontFamily">@font/qomra</item>
     </style>
+
+    <style name="BottomSheetShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
 </resources>
