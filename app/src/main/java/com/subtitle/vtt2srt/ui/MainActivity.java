@@ -46,10 +46,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            getWindow().setNavigationBarContrastEnforced(false);
-        }
-       UI.addSystemWindowInsetToPadding(binding.appbar,true,true,true,false);
+        setupWindowInsets();
+
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
@@ -71,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
             binding.tvProgress.setText(getString(R.string.progress_fmt, percent));
         });
         viewModel.getMessage().observe(this, this::showMessage);
+    }
+
+    private void setupWindowInsets() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(false);
+        }
+        UI.addSystemWindowInsetToPadding(binding.appbar,true,true,true,false);
     }
 
     private ConversionOptions buildOptions() {

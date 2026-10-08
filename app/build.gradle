@@ -39,5 +39,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.6'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.8.6'
 
-
+    testImplementation 'junit:junit:4.13.2'
 }
