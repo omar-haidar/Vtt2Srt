@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Vtt2Srt" parent="Theme.Material3Expressive.DynamicColors.DayNight.NoActionBar">
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar">?isLightTheme</item>
+        <item name="android:fontFamily">@font/qomra</item>
+        <item name="fontFamily">@font/qomra</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?isLightTheme</item>
+    </style>
+</resources>
